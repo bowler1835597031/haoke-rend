@@ -11,22 +11,17 @@
         v-model="username"
         name="username"
         placeholder="请输入账号"
-        :rules="[{ required: true, message: '请填写账号' }]"
+        :rules="usernameRules"
       />
       <van-field
         v-model="password"
         type="password"
         name="password"
         placeholder="请输入密码"
-        :rules="[{ required: true, message: '请填写密码' }]"
+        :rules="codeRules"
       />
       <div style="margin: 16px">
-        <van-button
-          class="btn"
-          block
-          type="info"
-          native-type="submit"
-          @click="btn"
+        <van-button class="btn" block type="info" native-type="submit"
           >登录</van-button
         >
       </div>
@@ -36,14 +31,16 @@
 </template>
 
 <script>
-import { Toast } from 'vant'
 import { login } from '@/api/user'
+import { usernameRules, codeRules } from './rules'
 export default {
   name: 'Login',
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      usernameRules,
+      codeRules
     }
   },
   methods: {
@@ -51,12 +48,19 @@ export default {
       this.$router.back()
     },
     async login() {
-      const res = await login(this.username, this.password)
-      console.log(res)
-    },
-    btn() {
-      Toast.success('登录成功')
-      Toast.fail('你的账号或密码异常')
+      this.$toast.loading({
+        message: '正在火急火燎加载中',
+        forbidClick: true
+      })
+      try {
+        const res = await login(this.username, this.password)
+        console.log(res.data.body)
+        this.$store.commit('setUser', res.data.body)
+        this.$router.push('/home/profile')
+        this.$toast.success('登录成功')
+      } catch (error) {
+        this.$toast.fail('登录失败')
+      }
     }
   }
 }
