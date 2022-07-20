@@ -33,6 +33,14 @@ const routes = [
         component: () => import('@/views/Profile')
       }
     ]
+  },
+  {
+    path: '/favorite',
+    component: () => import('@/views/Favorite')
+  },
+  {
+    path: '/rent',
+    component: () => import('@/views/Rent')
   }
 ]
 

@@ -33,7 +33,7 @@
     <main>
       <!-- 宫格导览 -->
       <van-grid :border="false" :column-num="3">
-        <van-grid-item icon="star-o" text="我的收藏" to="/favorate" />
+        <van-grid-item icon="star-o" text="我的收藏" to="/favorite" />
         <van-grid-item icon="wap-home-o" text="我的出租" to="/rent"/>
         <van-grid-item icon="clock-o" text="看房记录" />
         <van-grid-item icon="debit-pay" text="成为房主" />
